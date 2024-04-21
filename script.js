@@ -57,8 +57,6 @@
         let button = makeImage("img", "button", "svg/button.svg", "Button");
         additionalElement.appendChild(button);
 
-        additionalElement.style.flexWrap = "wrap"
-
         brand.appendChild(additionalElement);
     }
 
