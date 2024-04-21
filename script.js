@@ -1,7 +1,8 @@
 let init = false;
 let swiper;
+
 function swiperCard() {
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth < 768) {
         if (!init) {
             init = true;
             swiper = new Swiper(".swiper", {
@@ -21,139 +22,109 @@ function swiperCard() {
         init = false;
     }
 }
-swiperCard();
-window.addEventListener("resize", swiperCard);
+    swiperCard();
+    window.addEventListener("resize", swiperCard);
+
+    let makeImage = function (tagName, className, src, alt) {
+        let element = document.createElement(tagName);
+        element.classList.add(className);
+        element.src = src;
+        element.alt = alt;
+
+        return element;
+    };
+
+    const addAdditionalElement = () => {
+            let brand = document.querySelector(".brand");
+
+            let additionalElement = document.createElement("div");
+            additionalElement.classList.add("brand__company");
+
+            let img = makeImage("img", "image", "svg/lenovo.svg", "Lenovo");
+
+            let styleImage = document.querySelector(".image");
+            let s = window.getComputedStyle(styleImage);
+
+            img.style.width = s.width;
+            img.style.height = s.height;
+
+            additionalElement.appendChild(img);
 
 
+            let button = makeImage("img", "button", "svg/button.svg", "Button");
+            additionalElement.appendChild(button);
 
-
-
-
-// 2
-
-document.addEventListener("DOMContentLoaded", function() {
-    let showAllButton = document.querySelector(".show-all-button"); //находит первый элемент в документе с классом show-all-button
-                                                                    // и присваивает его переменной showAllButton.Эта переменная
-                                                                    // теперь ссылается на этот элемент DOM, и вы можете
-                                                                    // взаимодействовать с ним через переменную showAllButton.
-                                                                    // Например, вы можете добавить обработчик событий к
-                                                                    // этому элементу, изменить его содержимое или стиль, и т.д.
-
-    let brandItems = document.querySelectorAll(".brand__company"); // Выражение находит все элементы в документе с классом
-                                                                    // brand__company и присваивает их NodeList (типа массива) переменной
-                                                                    // brandItems.Переменная brandItems теперь ссылается
-                                                                    // на коллекцию элементов DOM, и вы можете взаимодействовать
-                                                                    // с каждым из них через переменную brandItems.
-                                                                    // Например, вы можете перебрать все элементы в коллекции,
-                                                                    // изменить их содержимое или стиль, и т.д.
-        let isExpanded = false; //Эта переменная будет использоваться для отслеживания состояния раскрытости или свернутости
-                                // кнопки "Показать всё".
-
-    // Скрываем элементы, начиная с седьмого
-    for (let i = 6; i < brandItems.length; i++) {   // Цикл начинается с индекса 6 и продолжается до brandItems.length,
-        brandItems[i].style.display = "none";       // то есть до конца коллекции. Внутри цикла для каждого элемента в
-    }                                               // коллекции устанавливается свойство style.display в значение "none",
-                                                    // что приводит к тому, что элемент становится невидимым (display: none)
-                                                    // на странице.
-
-   //  var makeElement = function (tagName, className, text) {
-   //      var element = document.createElement(tagName);
-   //      element.classList.add(className);
-   //      if (text) {
-   //          element.textContent = text;
-   //      }
-   //      return element;
-   //  };
-   //
-   // let addAdditionalElement = function() {
-   //      // Создаем новый элемент с помощью функции makeElement
-   //      let additionalElement = makeElement("div", "swiper-slide brand__company");
-   //      // Создаем элемент img с помощью функции makeElement
-   //      let imgElement = makeElement("img");
-   //      imgElement.src = "svg/lenovo.svg";
-   //      imgElement.alt = "Lenovo";
-   //      // Добавляем элемент img в созданный div
-   //      additionalElement.appendChild(imgElement);
-   //
-   //      // Вставляем созданный элемент перед следующим элементом после шестого элемента в brandItems
-   //      brandItems[7].parentNode.insertBefore(additionalElement, brandItems[7]);
-   //  }
-   //  addAdditionalElement();
-
-
-    // // Функция для добавления дополнительного элемента
-    // function addAdditionalElement() {
-    //     let additionalElement = document.createElement("div");
-    //     additionalElement.classList.add("brand__company");
-    //     additionalElement.innerHTML = '<img class="image" src="svg/lenovo.svg" alt="Lenovo"> <img src="svg/button.svg" alt="Button">';
-    //     brandItems[7].parentNode.insertBefore(additionalElement, brandItems[7].nextSibling);
-    // }
-    //
-    // // Добавляем дополнительный элемент
-    //         addAdditionalElement();
-
-
-    showAllButton.addEventListener("click", function() {
-        if (!isExpanded) {
-            // Показываем скрытые элементы
-            for (let i = 6; i < brandItems.length; i++) {
-                brandItems[i].style.display = "block";
-            }
-            showAllButton.textContent = "Скрыть";
-            isExpanded = true;
-        } else {
-            // Скрываем элементы, начиная с седьмого
-            for (let i = 6; i < brandItems.length; i++) {
-                brandItems[i].style.display = "none";
-            }
-            showAllButton.textContent = "Показать все";
-            isExpanded = false;
+            brand.appendChild(additionalElement);
         }
+
+    addAdditionalElement();
+
+    let num = window.innerWidth;
+    let newCount = 0
+    // let currentCount = 0;
+
+    if (num >= 768 && num <= 1119) {
+        newCount = 6;
+    } else {
+        newCount = 8;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        let brandItems = document.querySelectorAll(".brand__company");
+
+        for (let i = newCount; i < brandItems.length; i++) {
+            brandItems[i].style.display = "none";
+        }
+
+        let showAllButton = document.querySelector(".buttonBlock__show-all-button");
+        let isExpanded = false;
+
+
+        let style = document.querySelector(".brand__company");
+        let s = window.getComputedStyle(style);
+
+        showAllButton.addEventListener("click", function () {
+            if (!isExpanded) {
+                for (let i = newCount; i < brandItems.length; i++) {
+                    brandItems[i].style.display = s.display;
+                }
+                showAllButton.textContent = "Скрыть";
+                document.querySelector('.up').style.display = 'block';
+                document.querySelector('.down').style.display = 'none';
+                isExpanded = true;
+            } else {
+                for (let i = newCount; i < brandItems.length; i++) {
+                    brandItems[i].style.display = "none";
+                }
+                showAllButton.textContent = "Показать все";
+                document.querySelector('.up').style.display = 'none';
+                document.querySelector('.down').style.display = 'block';
+                isExpanded = false;
+            }
+        });
     });
-});
 
-
-
-
-
-
-
-// document.addEventListener("DOMContentLoaded", function() {
-//     let showAllButton = document.querySelector(".show-all-button");
-//     let brandItems = document.querySelectorAll(".swiper-wrapper.brand .swiper-slide");
-//     let isExpanded = false;
+// let num = window.innerWidth;
+// let newCount = 0
+// let currentCount = 0; // Глобальная переменная для отслеживания текущего значения count
 //
-//     // Скрываем элементы, начиная с седьмого
-//     for (var i = 6; i < brandItems.length; i++) {
-//         brandItems[i].style.display = "none";
+// function updateCount() {
+//     let num = window.innerWidth;
+//     // let newCount;
+//
+//     if (num >= 768 && num <= 1119) {
+//         newCount = 6;
+//     } else {
+//         newCount = 8;
 //     }
 //
-//     // Функция для добавления дополнительного элемента
-//     function addAdditionalElement() {
-//         var additionalElement = document.createElement("div");
-//         additionalElement.classList.add("swiper-slide", "brand__company");
-//         additionalElement.innerHTML = '<img class="image" src="svg/lenovo.svg" alt="Lenovo">';
-//         brandItems[6].parentNode.insertBefore(additionalElement, brandItems[6].nextSibling);
+//     if (newCount !== currentCount) { // Проверяем, изменилось ли значение count
+//         location.reload(); // Если изменилось, перезагружаем страницу
 //     }
 //
-//     // Добавляем дополнительный элемент
-//     addAdditionalElement();
+//     currentCount = newCount; // Обновляем текущее значение count
+// }
 //
-//     showAllButton.addEventListener("click", function() {
-//         if (!isExpanded) {
-//             // Показываем скрытые элементы
-//             for (var i = 6; i < brandItems.length; i++) {
-//                 brandItems[i].style.display = "block";
-//             }
-//             showAllButton.textContent = "Скрыть";
-//             isExpanded = true;
-//         } else {
-//             // Скрываем элементы, начиная с седьмого
-//             for (var i = 6; i < brandItems.length; i++) {
-//                 brandItems[i].style.display = "none";
-//             }
-//             showAllButton.textContent = "Показать все";
-//             isExpanded = false;
-//         }
-//     });
-// });
+// // updateCount(); // Вызываем функцию при загрузке страницы
+//
+//  window.addEventListener("resize", location.reload());

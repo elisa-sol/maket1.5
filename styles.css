@@ -121,6 +121,10 @@ html, body {
     .swiper-pagination-bullet-active {
         background-color: #B5B6BC;
     }
+
+    .buttonBlock {
+        display: none;
+    }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1119px) {
@@ -140,13 +144,15 @@ html, body {
 
     .brand__company {
         display: flex;
+        flex-grow: 1;
         justify-content: space-around;
         background: #FFFFFF;
         border: 1px solid #EAEAEA;
         border-radius: 6px;
         box-sizing: border-box;
-        width: 224px;
         gap: 0;
+        width: calc(25% - 20px);
+        margin: 10px;
     }
 
     .image {
@@ -158,22 +164,88 @@ html, body {
         padding: 15px;
     }
 
-    .show-all-button {
+    .buttonBlock {
+        display: flex;
+        column-gap: 1px;
+    }
+
+    .buttonBlock__show-all-button {
         font-family: "TT Lakes", sans-serif;
         color: black;
-        margin-left: 20px;
         border: none;
         background: #F8F8F8;
     }
 
-    .show-all-button::before {
-        content: "";
-        display: inline-block;
-        width: 24px;
-        height: 24px;
-        background-image: url('svg/down.svg');
-        background-size: contain;
-        background-repeat: no-repeat;
-        vertical-align: middle;
+    .down {
+        margin: 10px;
     }
+
+    .up {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1120px) {
+    body {
+        max-width: 1120px;
+        margin: 0 auto;
+    }
+
+    .mainMenu {
+        margin-top: 15px;
+        margin-right: 0;
+        padding: 0;
+    }
+
+    .brand {
+        display: flex;
+        justify-content: space-around;
+        padding: 0;
+        flex-wrap: wrap;
+        gap: 16px 24px;
+    }
+
+    .brand__company {
+        display: flex;
+        flex-grow: 1;
+        justify-content: space-around;
+        background: #FFFFFF;
+        border: 1px solid #EAEAEA;
+        border-radius: 6px;
+        box-sizing: border-box;
+        gap: 0;
+        width: calc(20% - 20px);
+        margin: 10px;
+    }
+
+    .image {
+        margin-right: auto;
+        padding-left: 15px;
+    }
+
+    .button {
+        padding: 15px;
+    }
+
+    .buttonBlock {
+        display: flex;
+        column-gap: 1px;
+    }
+
+    .buttonBlock__show-all-button {
+        font-family: "TT Lakes", sans-serif;
+        color: black;
+        border: none;
+        background: #F8F8F8;
+    }
+
+    .down {
+        margin: 10px;
+    }
+
+    .up {
+        display: none;
+    }
+
+
 }
