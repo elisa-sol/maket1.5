@@ -1,27 +1,28 @@
-let init = false;
-let swiper;
+    let init = false;
+    let swiper;
 
-function swiperCard() {
-    if (window.innerWidth < 768) {
-        if (!init) {
-            init = true;
-            swiper = new Swiper(".swiper", {
-                loop: true, // true - круговой слайдер, false - слайдер с конечными положениями
-                speed: 1000, // скорость переключения слайдов
-                freeMode: true, // можно перетаскивать как ленту
-                slidesPerView: 1.2, // кол-во активных слайдов
-                spaceBetween: 10,
-                pagination: {
-                    el: ".swiper-pagination",
-                    clickable: true,
-                },
-            });
+    function swiperCard() {
+        if (window.innerWidth < 768) {
+            if (!init) {
+                init = true;
+                swiper = new Swiper(".swiper", {
+                    loop: true,
+                    speed: 1000,
+                    freeMode: true,
+                    slidesPerView: 1.2,
+                    spaceBetween: 10,
+                    pagination: {
+                        el: ".swiper-pagination",
+                        clickable: true,
+                    },
+                });
+            }
+        } else if (init) {
+            swiper.destroy();
+            init = false;
         }
-    } else if (init) {
-        swiper.destroy();
-        init = false;
     }
-}
+
     swiperCard();
     window.addEventListener("resize", swiperCard);
 
@@ -34,34 +35,41 @@ function swiperCard() {
         return element;
     };
 
-    const addAdditionalElement = () => {
-            let brand = document.querySelector(".brand");
+    const addAdditionalElement = (svg, alt, apple) => {
+        let brand = document.querySelector(".brand");
 
-            let additionalElement = document.createElement("div");
-            additionalElement.classList.add("brand__company");
+        let additionalElement = document.createElement("div");
+        additionalElement.classList.add("brand__company");
 
-            let img = makeImage("img", "image", "svg/lenovo.svg", "Lenovo");
+        let img = makeImage("img", "image", svg, alt);
 
-            let styleImage = document.querySelector(".image");
-            let s = window.getComputedStyle(styleImage);
+        let s = window.getComputedStyle(document.querySelector(".image"));
 
-            img.style.width = s.width;
-            img.style.height = s.height;
-
-            additionalElement.appendChild(img);
-
-
-            let button = makeImage("img", "button", "svg/button.svg", "Button");
-            additionalElement.appendChild(button);
-
-            brand.appendChild(additionalElement);
+        img.style.width = s.width;
+        img.style.height = s.height;
+        if (apple) {
+            img.style.width = "44px"
         }
 
-    addAdditionalElement();
+        additionalElement.appendChild(img);
+
+
+        let button = makeImage("img", "button", "svg/button.svg", "Button");
+        additionalElement.appendChild(button);
+
+        additionalElement.style.flexWrap = "wrap"
+
+        brand.appendChild(additionalElement);
+    }
+
+    addAdditionalElement("svg/lenovo.svg", "Lenovo", false);
+    addAdditionalElement("svg/samsung.svg", "Samsung", false);
+    addAdditionalElement("svg/apple.svg", "Apple", true);
+
+
 
     let num = window.innerWidth;
-    let newCount = 0
-    // let currentCount = 0;
+    let newCount = 0;
 
     if (num >= 768 && num <= 1119) {
         newCount = 6;
@@ -78,7 +86,6 @@ function swiperCard() {
 
         let showAllButton = document.querySelector(".buttonBlock__show-all-button");
         let isExpanded = false;
-
 
         let style = document.querySelector(".brand__company");
         let s = window.getComputedStyle(style);
@@ -104,27 +111,10 @@ function swiperCard() {
         });
     });
 
-// let num = window.innerWidth;
-// let newCount = 0
-// let currentCount = 0; // Глобальная переменная для отслеживания текущего значения count
-//
-// function updateCount() {
-//     let num = window.innerWidth;
-//     // let newCount;
-//
-//     if (num >= 768 && num <= 1119) {
-//         newCount = 6;
-//     } else {
-//         newCount = 8;
-//     }
-//
-//     if (newCount !== currentCount) { // Проверяем, изменилось ли значение count
-//         location.reload(); // Если изменилось, перезагружаем страницу
-//     }
-//
-//     currentCount = newCount; // Обновляем текущее значение count
-// }
-//
-// // updateCount(); // Вызываем функцию при загрузке страницы
-//
-//  window.addEventListener("resize", location.reload());
+    window.addEventListener("resize", function () {
+        let newNum = window.innerWidth;
+        if ((newNum >= 768 && newNum <= 1119) !== (num >= 768 && num <= 1119)) {
+            location.reload();
+        }
+        num = newNum;
+    });
