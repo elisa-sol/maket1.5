@@ -109,10 +109,3 @@
         });
     });
 
-    window.addEventListener("resize", function () {
-        let newNum = window.innerWidth;
-        if ((newNum >= 768 && newNum <= 1119) !== (num >= 768 && num <= 1119)) {
-            location.reload();
-        }
-        num = newNum;
-    });
